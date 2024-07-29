@@ -1,0 +1,46 @@
+ Qn:1 Permutation
+def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        n=len(nums)
+        i=n-2
+        while i>=0 and nums[i]>=nums[i+1]:
+            i-=1
+        if i>=0:
+            j=n-1
+            while nums[j]<=nums[i]:
+                j-=1
+            nums[i],nums[j]=nums[j],nums[i]
+        left,right =i+1,n-1
+        while left <right:
+            nums[left],nums[right]=nums[right],nums[left]
+            left+=1
+            right-=1
+sol=Solution()
+nums1=[1,2,3]
+sol.nextPermutation(nums1)
+print(nums1)
+nums2=[3,2,1]
+sol.nextPermutation(nums2)
+print(nums2)
+nums3=[1,1,5]
+sol.nextPermutation(nums3)
+print(nums3)
+
+Qn:2 Sql Consecutive numbers
+
+
+SELECT distinct num ConsecutiveNums
+from (select id,num,
+lag(num)over(order by id)
+as prev_num,lead(num)over(order by id)as next_num 
+from Logs)sq
+where sq.num=sq.prev_num and sq.prev_num=sq.next_num
+
+Explanation:
+
+it retrieves id and num from logs table,it uses lag and lead window function to get previous and next numbers relative to
+current row.Then filters the row where the current number is the same as both the previous number. Uses distinct num return 
+only unique numbers that meet the conditions
